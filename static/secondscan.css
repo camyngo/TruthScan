@@ -63,15 +63,24 @@ button{ font-family:inherit; }
 }
 .wordmark-text span{ color:var(--primary); }
 
-.page-tabs{ display:flex; gap:4px; }
-.page-tab{
-  display:inline-flex; align-items:center; min-height:40px; padding:8px 14px;
-  border-radius:10px; color:var(--text-2); font-size:15px; font-weight:600; text-decoration:none;
-  transition:background .18s ease, color .18s ease;
+/* Page tabs: a bordered segmented control; the current page is filled. */
+.page-tabs{
+  display:inline-flex; gap:4px; padding:4px;
+  background:var(--surface); border:1px solid var(--border-strong); border-radius:14px;
+  box-shadow:var(--shadow-sm);
 }
-.page-tab:hover{ background:rgba(255,255,255,0.8); color:var(--text); }
+.page-tab{
+  display:inline-flex; align-items:center; gap:8px; min-height:42px; padding:8px 16px;
+  border-radius:10px; color:var(--text-2); font-size:15px; font-weight:600; text-decoration:none;
+  transition:background .18s ease, color .18s ease, box-shadow .18s ease;
+}
+.page-tab svg{ width:18px; height:18px; flex-shrink:0; }
+.page-tab:hover{ background:var(--surface-2); color:var(--text); }
 .page-tab:focus-visible{ outline:3px solid var(--primary-ring); outline-offset:2px; }
-.page-tab[aria-current="page"]{ background:var(--primary-tint); color:var(--primary); }
+.page-tab[aria-current="page"]{
+  background:var(--primary); color:#fff;
+  box-shadow:0 4px 12px -4px rgba(31,94,255,0.6);
+}
 
 .lang-picker{
   margin-left:auto; display:flex; align-items:center; gap:6px;
@@ -475,11 +484,8 @@ button.scan:disabled{
   .header-inner{
     display:grid; grid-template-columns:1fr auto; gap:12px; padding:14px 16px;
   }
-  .page-tabs{
-    grid-column:1 / -1; grid-row:2; padding:4px; border-radius:12px;
-    background:rgba(255,255,255,0.75); border:1px solid var(--border);
-  }
-  .page-tab{ flex:1; justify-content:center; }
+  .page-tabs{ grid-column:1 / -1; grid-row:2; display:flex; }
+  .page-tab{ flex:1; justify-content:center; padding:8px 10px; }
   #langSelect{ max-width:110px; }
   .wrap{ padding:0 16px; }
   .intro{ padding:18px 0 18px; }
@@ -505,6 +511,10 @@ button.scan:disabled{
   .phone-fact{ grid-template-columns:1fr; gap:2px; }
   .result-footer{ flex-direction:column; align-items:stretch; }
   .rescan{ justify-content:center; }
+}
+
+@media (max-width: 360px){
+  .page-tab svg{ display:none; }
 }
 
 @media (prefers-reduced-motion: reduce){
