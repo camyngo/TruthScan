@@ -72,8 +72,8 @@ async function loadUiStrings(lang){
 function t(key, fallback){ return (uiStrings && uiStrings[key]) || fallback; }
 
 function applyUiStrings(){
-  tabTextBtn.textContent = t('tab_text', 'Paste text');
-  tabImageBtn.textContent = t('tab_image', 'Upload screenshot');
+  tabTextBtn.querySelector('.tab-label').textContent = t('tab_text', 'Paste text');
+  tabImageBtn.querySelector('.tab-label').textContent = t('tab_image', 'Upload screenshot');
   input.placeholder = t('placeholder_text', 'Paste the suspicious message here…');
   scanBtn.textContent = t('scan_text_btn', 'Scan message');
   scanImageBtn.textContent = t('scan_image_btn', 'Scan screenshot');
@@ -95,7 +95,7 @@ function applyUiStrings(){
   document.querySelector('[data-ex="delivery"]').textContent = t('ex_delivery', 'Try: delivery link');
   document.querySelector('[data-ex="job"]').textContent = t('ex_job', 'Try: job offer');
   document.querySelector('[data-ex="safe"]').textContent = t('ex_safe', 'Try: a normal text');
-  tabPhoneBtn.textContent = t('tab_phone', 'Phone number scan');
+  tabPhoneBtn.querySelector('.tab-label').textContent = t('tab_phone', 'Phone number scan');
   phoneInput.placeholder = t('placeholder_phone', 'Phone number, e.g. (206) 555-0123');
   phoneContext.placeholder = t('placeholder_phone_context', 'Optional: what did they say or ask for?');
   scanPhoneBtn.textContent = t('scan_phone_btn', 'Scan number');
@@ -179,6 +179,7 @@ function showTab(name){
   activeTab = name;
   Object.entries(TABS).forEach(([key, [btn, panel]]) => {
     btn.classList.toggle('active', key === name);
+    btn.setAttribute('aria-selected', key === name);
     panel.classList.toggle('active', key === name);
   });
   result.classList.remove('active');
@@ -188,6 +189,17 @@ tabImageBtn.addEventListener('click', () => showTab('image'));
 tabPhoneBtn.addEventListener('click', () => showTab('phone'));
 
 dropzone.addEventListener('click', () => fileInput.click());
+dropzone.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+});
+// A screenshot pasted anywhere on the page (Ctrl+V / ⌘V) goes to the screenshot tab.
+document.addEventListener('paste', (e) => {
+  const file = [...(e.clipboardData?.files || [])].find(f => f.type.startsWith('image/'));
+  if (!file) return;
+  e.preventDefault();
+  showTab('image');
+  handleImageFile(file);
+});
 dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('hover'); });
 dropzone.addEventListener('dragleave', () => dropzone.classList.remove('hover'));
 dropzone.addEventListener('drop', (e) => {
@@ -499,7 +511,7 @@ function renderResult(parsed){
   }
 
   result.classList.add('active');
-  result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 readAloudBtn.addEventListener('click', () => {
@@ -534,7 +546,7 @@ function renderError(message, serverHint = true){
   actionBox.style.display = 'none';
   safetyBox.innerHTML = '';
   result.classList.add('active');
-  result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 async function sendFeedback(val){

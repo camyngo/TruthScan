@@ -254,6 +254,6 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll('.reveal').forEach((el, i) => {
-  el.style.transitionDelay = (i % 2) * 0.09 + 's';
+  el.style.transitionDelay = (i % 3) * 0.08 + 's';
   revealObserver.observe(el);
 });
