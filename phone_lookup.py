@@ -1,4 +1,4 @@
-"""Facts and risk signals for SecondScan's phone number scan.
+"""Facts and risk signals for TruthScan's phone number scan.
 
 Offline facts come from Google's libphonenumber (the `phonenumbers` package):
 whether the number is valid, its country and area, its number type, and the

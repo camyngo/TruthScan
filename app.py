@@ -43,7 +43,7 @@ SUPPORTED_LANGUAGES = [
     "Chinese (Simplified)", "Russian",
 ]
 
-SYSTEM_PROMPT = """You are the detection engine inside SecondScan, a tool that helps ordinary people tell whether a message they received is a scam.
+SYSTEM_PROMPT = """You are the detection engine inside TruthScan, a tool that helps ordinary people tell whether a message they received is a scam.
 
 You will be given one message (an SMS, email, WhatsApp text, or call transcript). A rule engine has already \
 flagged some pattern matches in it - use those as hints, not gospel: confirm, downgrade, or add to them based \
@@ -81,7 +81,7 @@ multiple, or severe manipulation tactics.
 READING LEVEL "simple" means: very short sentences, everyday words, no jargon, written for someone who is new \
 to smartphones or not fluent in reading long text. READING LEVEL "normal" means ordinary plain language."""
 
-PHONE_SYSTEM_PROMPT = """You are the phone number checker inside SecondScan, a tool that helps ordinary people decide \
+PHONE_SYSTEM_PROMPT = """You are the phone number checker inside TruthScan, a tool that helps ordinary people decide \
 whether a phone number that called or texted them is likely to be a scam.
 
 You will be given facts about one phone number: what the official numbering plan says about it and, when it was \
@@ -373,7 +373,7 @@ def phone_rule_only_result(phone_signals: list, context_signals: list) -> dict:
     return {
         "verdict": verdict,
         "verdict_label": PHONE_VERDICT_LABELS[verdict],
-        "summary": "AI analysis is temporarily unavailable, so this result is from SecondScan's number checks only.",
+        "summary": "AI analysis is temporarily unavailable, so this result is from TruthScan's number checks only.",
         "recommended_action": "Treat this as a lower-confidence result. Don't call the number back; if it claimed to be a company, contact them through their official website.",
         "findings": findings,
         "safety_lines": dict(PHONE_SAFETY_LINES),
@@ -722,13 +722,13 @@ class RevalidatedStaticFiles(StaticFiles):
         return response
 
 
-# SecondScan's stylesheets and scripts (static/secondscan.*, static/patterns.*).
+# TruthScan's stylesheets and scripts (static/secondscan.*, static/patterns.*).
 app.mount("/static", RevalidatedStaticFiles(directory=BASE_DIR / "static"), name="static")
 
 
 @app.get("/")
 async def index():
-    # This site hosts SecondScan, so the home page is the scanner.
+    # This site hosts TruthScan, so the home page is the scanner.
     return RedirectResponse("/secondscan")
 
 

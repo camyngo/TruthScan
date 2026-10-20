@@ -1,14 +1,14 @@
-# SecondScan: AI Scam Detection & Protection
+# TruthScan: AI Scam Detection & Protection
 
 **Paste a message, upload a screenshot, or look up a phone number, and find out in plain language whether it's a scam and what to do next.**
 
 **Try it out:** [truthscan-six.vercel.app](https://truthscan-six.vercel.app) · [Common scam patterns](https://truthscan-six.vercel.app/secondscan/patterns)
 
-This repository (TruthScan) hosts SecondScan, the scam check and resources page for
+TruthScan is the scam check and resources page for
 [Second Look](https://github.com/AartiDashore/SecondLook), our HuskyHack 2026 project.
 
 <p align="center">
-  <img src="screenshots/scanner.jpg" width="720" alt="SecondScan home page: the heading 'Is this message a scam?', and a scanner with three tabs: Paste text, Upload screenshot, and Phone number scan">
+  <img src="screenshots/scanner.jpg" width="720" alt="TruthScan home page: the heading 'Is this message a scam?', and a scanner with three tabs: Paste text, Upload screenshot, and Phone number scan">
 </p>
 
 ## Inspiration
@@ -19,12 +19,12 @@ imposter scams (fake banks, agencies and companies) were the most reported fraud
 India, about three-quarters of the money lost to cyber fraud in 2025 went to investment scams.
 
 Most people never get a second opinion before they reply, click or pay. Second Look pauses a risky payment
-before it leaves a member's account. SecondScan is the other half: a place to check the message, screenshot or
+before it leaves a member's account. TruthScan is the other half: a place to check the message, screenshot or
 phone number behind it, and a page that shows what today's most common scams look like.
 
 ## What it does
 
-**Check a message.** Paste any text, email, WhatsApp message or call transcript. SecondScan answers with:
+**Check a message.** Paste any text, email, WhatsApp message or call transcript. TruthScan answers with:
 
 - a verdict: *Looks safe*, *Proceed with caution* or *Likely a scam*, with a one-line reason
 - every red flag, quoting the exact phrase from the message and explaining why it's a warning sign
@@ -33,10 +33,10 @@ phone number behind it, and a page that shows what today's most common scams loo
 - for likely scams, the cyber-crime reporting line and website for the country that matches your language
 
 **Check a screenshot.** Upload a screenshot of a text, chat or call screen. Claude reads the text from the image,
-then SecondScan checks it the same way.
+then TruthScan checks it the same way.
 
 **Check a phone number.** Enter the number that called or texted you, and optionally what they said or asked for.
-SecondScan checks:
+TruthScan checks:
 
 - whether it's a real, valid number, and where it's from
 - its line type and carrier
@@ -88,7 +88,7 @@ flowchart LR
   offers and account-detail requests) and passes them to the model as hints.
 - **Claude decides.** Claude reads the message with those hints and returns structured JSON that matches a fixed
   schema, so every verdict has the same shape. `claude-opus-5-5` runs first, with `claude-sonnet-5-5` as a
-  fallback. If both fail, SecondScan still answers from the rules alone and labels the result as lower-confidence.
+  fallback. If both fail, TruthScan still answers from the rules alone and labels the result as lower-confidence.
 - **Screenshots** are read with Claude's vision, so there's no OCR binary to install on a serverless host.
 - **Phone numbers** go through `phone_lookup.py`: Google's libphonenumber for validity, country, area, line type
   and red flags, plus Twilio Lookup for the live carrier, VoIP detection and caller ID name when it's configured.
@@ -133,7 +133,7 @@ flowchart LR
 - Small details decide whether a demo works live: build presets, how an environment variable is pasted, image
   sizes and browser caching.
 
-## What's next for SecondScan
+## What's next for TruthScan
 
 - Turn on the live carrier lookup in production, for Google Voice detection and caller ID names.
 - Turn on scan history and known-scam matching in production.
@@ -141,7 +141,7 @@ flowchart LR
 - Translate the patterns page and the phone details, which are English-only today.
 - Add more patterns, such as fake toll notices, which helped drive a 40% jump in government imposter reports in
   2025.
-- Link to SecondScan from Second Look's "Take another look" button.
+- Link to TruthScan from Second Look's "Take another look" button.
 
 ## Built with
 
@@ -161,7 +161,7 @@ cp .env.example .env    # then add your ANTHROPIC_API_KEY
 uvicorn app:app --reload
 ```
 
-Open http://127.0.0.1:8000, which goes straight to SecondScan. `--reload` restarts the server when you save
+Open http://127.0.0.1:8000, which goes straight to TruthScan. `--reload` restarts the server when you save
 `app.py`; changes to the pages and `static/` files only need a browser refresh.
 
 | Environment variable | Needed? | What it turns on |
@@ -223,5 +223,5 @@ above in the Vercel project's settings, and mark the keys as Sensitive.
 
 ## License
 
-This repository's [LICENSE](LICENSE) is MIT. Tellsign, which SecondScan is adapted from, is published without a
+This repository's [LICENSE](LICENSE) is MIT. Tellsign, which TruthScan is adapted from, is published without a
 license.
