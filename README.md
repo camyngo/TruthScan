@@ -1,5 +1,8 @@
 # Second Look (HuskyHack 2026)
 
+Live at **https://truthscan-six.vercel.app** (Vercel project `truthscan`). Pushing to `main` deploys to production
+automatically; pushing any other branch creates a private preview deployment.
+
 This repo deploys as one Vercel project with these pages:
 
 | Route | What it is |
