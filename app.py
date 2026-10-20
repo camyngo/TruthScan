@@ -8,7 +8,7 @@ import anthropic
 import requests
 from dotenv import load_dotenv
 from fastapi import FastAPI, Form
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -709,7 +709,6 @@ async def get_languages():
 
 
 BASE_DIR = Path(__file__).parent
-SECOND_LOOK_PATH = BASE_DIR / "prototype.html"
 SECONDSCAN_PATH = BASE_DIR / "secondscan.html"
 PATTERNS_PATH = BASE_DIR / "patterns.html"
 
@@ -727,9 +726,10 @@ class RevalidatedStaticFiles(StaticFiles):
 app.mount("/static", RevalidatedStaticFiles(directory=BASE_DIR / "static"), name="static")
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/")
 async def index():
-    return SECOND_LOOK_PATH.read_text(encoding="utf-8")
+    # This site hosts SecondScan, so the home page is the scanner.
+    return RedirectResponse("/secondscan")
 
 
 @app.get("/secondscan", response_class=HTMLResponse)
